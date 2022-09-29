@@ -59,7 +59,6 @@ function game() {
     let computerWins=0
     for (let i = 0; i < 5; i++) {
         let playerSelection=getPlayerChoice();
-        console.log()
         let computerSelection=getComputerChoice();
         console.log(playRound(playerSelection,computerSelection))
         if (playRound(playerSelection,computerSelection)=='You lost this round... :(') {
@@ -76,6 +75,40 @@ function game() {
     }
 }
 
-console.log(game())
+//console.log(game())
 
- 
+function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('click')
+}
+
+function iamtrying(blah) {
+    let computerSelection = getComputerChoice();
+    let playerSelection = blah;
+    return playRound(playerSelection,computerSelection);
+}
+
+
+const buttons = document.querySelectorAll('button')
+buttons.forEach(button => {
+    button.addEventListener('mouseenter', function (e) {
+        e.target.classList.add('hover');
+    });
+    button.addEventListener('mouseout', function (e) {
+        e.target.classList.remove('hover');
+    });
+    button.addEventListener('mousedown', function (e) {
+        e.target.classList.add('click');
+    });
+    button.addEventListener('mouseup', function (e) {
+        e.target.classList.remove('click');
+    });
+});
+
+const rock = document.querySelector('.rock');
+rock.addEventListener('click', function(){alert(iamtrying('Rock'))})
+const paper = document.querySelector('.paper');
+paper.addEventListener('click', function(){alert(iamtrying('Paper'))})
+const scissors = document.querySelector('.scissors');
+scissors.addEventListener('click', function(){alert(iamtrying('Scissors'))})
+
