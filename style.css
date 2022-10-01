@@ -1,12 +1,35 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Sniglet');
+
 
 body {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: center;
     min-height: 100vh;
     
+}
+
+.score, .choice, .result {
+    display: flex ;
+    justify-content: center;
+    font-family: 'Sniglet';
+    font-size: 68px;
+    color:salmon;
+    text-align:center;
+}
+
+.print {
+    margin-left: 10px;
+
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 button {

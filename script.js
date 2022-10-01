@@ -29,34 +29,37 @@ function getPlayerChoice() {
     }
 }
 
+const result = document.querySelector('.result')
+const score = document.querySelector('.score')
 
 function playRound(playerSelection,computerSelection) {
     if (playerSelection === computerSelection) {
-        return 'It\'s a tie';
+        result.textContent='It\'s a tie' ;
     } else if (playerSelection === 'Paper') {
         if (computerSelection === 'Rock') {
-            return 'You won this round! :)';
+
+            result.textContent ='You won this round! :)';
         } else if (computerSelection === 'Scissors') {
-            return 'You lost this round... :(';
+            result.textContent ='You lost this round... :(';
         }
     } else if (playerSelection === 'Rock') {
         if (computerSelection === 'Scissors') {
-            return 'You won this round! :)';
+            result.textContent = 'You won this round! :)';
         } else if (computerSelection === 'Paper') {
-            return 'You lost this round... :(';
+            result.textContent = 'You lost this round... :(';
         }
-    } else if (playerSelection=== 'Scissors') {
+    } else if (playerSelection === 'Scissors') {
         if (computerSelection === 'Paper') {
-            return 'You won this round! :)';
+            result.textContent= 'You won this round! :)';
         } else if (computerSelection === 'Rock') {
-            return 'You lost this round... :(';
+            result.textContent= 'You lost this round... :(';
         }
     }
 }
 
 function game() {
-    let userWins=0;
-    let computerWins=0
+    let userWins = 0;
+    let computerWins = 0
     for (let i = 0; i < 5; i++) {
         let playerSelection=getPlayerChoice();
         let computerSelection=getComputerChoice();
@@ -82,9 +85,11 @@ function removeTransition(e) {
     e.target.classList.remove('click')
 }
 
-function iamtrying(blah) {
+function playround_one_arg(playerSelectionfromclick) {
     let computerSelection = getComputerChoice();
-    let playerSelection = blah;
+    const choicediv = document.querySelector('.print');
+    choicediv.textContent =computerSelection;
+    let playerSelection = playerSelectionfromclick;
     return playRound(playerSelection,computerSelection);
 }
 
@@ -106,9 +111,8 @@ buttons.forEach(button => {
 });
 
 const rock = document.querySelector('.rock');
-rock.addEventListener('click', function(){alert(iamtrying('Rock'))})
+rock.addEventListener('click', function(){(playround_one_arg('Rock'))})
 const paper = document.querySelector('.paper');
-paper.addEventListener('click', function(){alert(iamtrying('Paper'))})
+paper.addEventListener('click', function(){(playround_one_arg('Paper'))})
 const scissors = document.querySelector('.scissors');
-scissors.addEventListener('click', function(){alert(iamtrying('Scissors'))})
-
+scissors.addEventListener('click', function(){(playround_one_arg('Scissors'))})
