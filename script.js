@@ -29,7 +29,7 @@ function getPlayerChoice() {
     }
 }
 
-const result = document.querySelector('.result')
+const round = document.querySelector('.round')
 let scoreuser = document.querySelector('.user')
 let scorecomputer = document.querySelector('.computer')
 let userScore = 0
@@ -42,39 +42,40 @@ let numberGames=0
 
 
 function playRound(playerSelection,computerSelection) {
+
     if (playerSelection === computerSelection) {
-        result.textContent='It\'s a tie' ;
+        round.textContent='It\'s a tie' ;
     } else if (playerSelection === 'Paper') {
 
         if (computerSelection === 'Rock') {
-            result.textContent ='You won this round! :)';
+            round.textContent ='You won this round! :)';
             userScore +=1;
             scoreuser.textContent = 'User : '+userScore;
 
         } else if (computerSelection === 'Scissors') {
-            result.textContent ='You lost this round... :(';
+            round.textContent ='You lost this round... :(';
             computerScore +=1;
             scorecomputer.textContent = 'Computer : ' +computerScore;
         }
     } else if (playerSelection === 'Rock') {
         if (computerSelection === 'Scissors') {
-            result.textContent = 'You won this round! :)';
+            round.textContent = 'You won this round! :)';
             userScore +=1;
             scoreuser.textContent = 'User : '+userScore;
 
         } else if (computerSelection === 'Paper') {
-            result.textContent = 'You lost this round... :(';
+            round.textContent = 'You lost this round... :(';
             computerScore +=1;
             scorecomputer.textContent = 'Computer : ' +computerScore;
         }
     } else if (playerSelection === 'Scissors') {
         if (computerSelection === 'Paper') {
-            result.textContent= 'You won this round! :)';
+            round.textContent= 'You won this round! :)';
             userScore +=1;
             scoreuser.textContent = 'User : '+userScore;
 
          } else if (computerSelection === 'Rock') {
-            result.textContent= 'You lost this round... :(';
+            round.textContent= 'You lost this round... :(';
             computerScore +=1;
             scorecomputer.textContent = 'Computer : ' +computerScore;
         }
@@ -111,11 +112,13 @@ function removeTransition(e) {
 }
 
 function playround_one_arg(playerSelectionfromclick) {
-    let computerSelection = getComputerChoice();
-    const choicediv = document.querySelector('.print');
-    choicediv.textContent =computerSelection;
-    let playerSelection = playerSelectionfromclick;
-    return playRound(playerSelection,computerSelection);
+    if (winner.classList[1]!='winner') {
+        let computerSelection = getComputerChoice();
+        const choicediv = document.querySelector('.print');
+        choicediv.textContent =computerSelection;
+        let playerSelection = playerSelectionfromclick;
+        return playRound(playerSelection,computerSelection);
+    };
 }
 
 
@@ -134,6 +137,7 @@ buttons.forEach(button => {
         e.target.classList.remove('click');
     });
     button.addEventListener('mouseup',endgame);
+
 });
 
 const rock = document.querySelector('.rock');
@@ -145,7 +149,11 @@ scissors.addEventListener('click', function(){(playround_one_arg('Scissors'))});
 
 let nbgames = document.querySelector('.games');
 
-const winner = document.querySelector('.final')
+let winner = document.querySelector('.final')
+
+let tryAgain= document.createElement('div')
+
+
 
 function endgame() {
     if (numberGames<5) {
@@ -156,34 +164,69 @@ function endgame() {
         if (userScore> computerScore) {
             winner.classList.add('winner');
             winner.textContent='You won! :)';
-        } else {
+            tryAgain.classList.add('again');
+            tryAgain.textContent='Click here to play again!'
+            winner.appendChild(tryAgain);
+            console.log(winner.classList,tryAgain.classList)
+        } else if(computerScore>userScore) {
             winner.classList.add('winner');
             winner.textContent='You lost! :(';
-        }        
-        userScore=0;
-        computerScore=0;
-        numberGames=0;
+            tryAgain.classList.add('again')
+            tryAgain.textContent='Click here to play again!'
+            winner.appendChild(tryAgain);
+
+            console.log(winner.classList,tryAgain.classList)
+
+        } else {
+            winner.classList.add('winner');
+            winner.textContent='It\'s a tie!';
+            tryAgain.classList.add('again')
+            tryAgain.textContent='Click here to play again!'
+            console.log(winner.classList,tryAgain.classList)
+            winner.appendChild(tryAgain);
+
+
+        }    
         nbgames.textContent = numberGames;
-        scorecomputer.textContent = userScore;
-        scoreuser.textContent = computerScore;
+        scorecomputer.textContent = 'User : '+userScore;
+        scoreuser.textContent = 'Computer : '+computerScore;
+        console.log(numberGames,computerScore,userScore)
+
     } 
 }
 
 function removeResult() {
-    winner.textContent=''
+    winner.textContent='';
+    numberGames=0;
+    userScore=0;
+    computerScore=0;
+    tryAgain.textContent='';
+    nbgames.textContent=numberGames;
+    scorecomputer.textContent = userScore;
+    scoreuser.textContent = computerScore;
+    winner.classList.remove('winner');
+    tryAgain.classList.remove('again');
+}
+
+function addRemoveHover(bool) {
+    if (bool) {
+        winner.classList.add('hover')
+    } else {
+        winner.classList.remove('hover')
+    }
 }
 
 winner.addEventListener('mouseenter', function (e) {
     e.target.classList.add('hover');
-});
+},);
 
 winner.addEventListener('mouseout', function (e) {
     e.target.classList.remove('hover');
 });
 
-winner.addEventListener('click', function(e) {
-    e.target.classList.remove('winner')
-});
+tryAgain.addEventListener('mouseenter', function () {(addRemoveHover(true))},true);
+
+tryAgain.addEventListener('mouseout', function () {(addRemoveHover(false))},true);
 
 winner.addEventListener('click',removeResult);
 

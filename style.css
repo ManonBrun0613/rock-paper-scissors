@@ -12,7 +12,7 @@ body {
     
 }
 
-.score, .result, .choice {
+.score, .round, .choice {
     display: flex ;
     justify-content: center;
     font-family: 'Sniglet';
@@ -40,6 +40,7 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 button {
@@ -88,8 +89,14 @@ button {
 .title {
     font-family: 'Quicksand';
     color:rgb(255, 114, 138);
-    font-weight: 300;
+    font-weight:200;
     font-size: 108px;
     text-align: center;
 
+}
+
+.again {
+    font-family: 'Quicksand';
+    color: rgb(255, 114, 138);
+    font-size:28px;
 }
